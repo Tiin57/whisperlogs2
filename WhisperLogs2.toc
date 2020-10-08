@@ -1,0 +1,16 @@
+## Interface: 80300
+## Title: Whisper Log 2
+## Notes: Logs your whispers for future reference.
+## Author: Azarc
+## Version: 0.1
+## SavedVariablesPerCharacter: SAVED_WHISPERS
+
+vendor/json.lua
+
+globals.lua
+utils.lua
+lib/Whisper.lua
+lib/WhisperStore.lua
+events.lua
+commands.lua
+main.lua
