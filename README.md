@@ -13,7 +13,7 @@ No relation to the original Whisper Log, except the name and functionality.
 
 * `/wl` Shows the most recent logged whispers.
 * `/wl help` Shows... help.
-* `/wl print [player] [max]` Prints the most recent \[max] whispers (defaults to %d), optionally to/from \[player].
+* `/wl print [player] [max]` Prints the most recent \[max] whispers (defaults to 10), optionally to/from \[player].
 * `/wl clear` Clears all logged whispers.
 
 ## Source
