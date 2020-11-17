@@ -2,6 +2,17 @@
 
 set -e
 
+ARTIFACT_FILENAME="$1"
+if [ "$ARTIFACT_FILENAME" == "" ]; then
+  echo "Usage: bash .circleci/upload.sh <filename>"
+  exit 1
+fi
+
+if [ ! -f "$ARTIFACT_FILENAME" ]; then
+  echo "Artifact file \"$ARTIFACT_FILENAME\" is missing"
+  exit 1
+fi
+
 ADDON_VERSION="$CIRCLE_TAG"
 
 function get-toc-field() {
@@ -39,9 +50,7 @@ METADATA_BLOB=$(echo '{
 
 echo "METADATA_BLOB: $METADATA_BLOB"
 
-cp WhisperLogs2.zip "WhisperLogs2-$ADDON_VERSION.zip"
-
 curl \
-  -F "file=@./WhisperLogs2-$ADDON_VERSION.zip" \
+  -F "file=@./$ARTIFACT_FILENAME" \
   -F "metadata=$METADATA_BLOB" \
   "https://wow.curseforge.com/api/projects/$CURSE_PROJECT_ID/upload-file?token=$CURSE_TOKEN"

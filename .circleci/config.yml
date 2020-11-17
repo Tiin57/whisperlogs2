@@ -1,22 +1,14 @@
 version: 2.1
 
 executors:
-  base:
+  go:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/go:1.15
 
 workflows:
   build_and_publish:
     jobs:
-      - build:
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - publish:
-          requires:
-            - build
+      - build_and_publish:
           filters:
             tags:
               only: /^v.*/
@@ -24,8 +16,8 @@ workflows:
               ignore: /.*/
 
 jobs:
-  build:
-    executor: base
+  build_and_publish:
+    executor: go
     steps:
       - checkout:
           path: ./WhisperLogs2
@@ -33,15 +25,13 @@ jobs:
           name: Build artifact
           command: |
             zip -r WhisperLogs2.zip ./WhisperLogs2
-      - persist_to_workspace:
-          root: .
-          paths:
-            - WhisperLogs2.zip
-  publish:
-    executor: base
-    steps:
-      - attach_workspace:
-          at: .
+            mv WhisperLogs2.zip ./WhisperLogs2/WhisperLogs2-$CIRCLE_TAG.zip
+      - run:
+          name: Install dependencies
+          command: |
+            go get github.com/ericchiang/pup
       - run:
           name: Upload artifact
-          command: bash .circleci/upload.sh
+          command: |
+            cd ./WhisperLogs2
+            bash .circleci/upload.sh ./WhisperLogs2-$CIRCLE_TAG.zip
