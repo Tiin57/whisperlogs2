@@ -1,0 +1,47 @@
+version: 2.1
+
+executors:
+  base:
+    docker:
+      - image: cimg/base:stable
+
+workflows:
+  build_and_publish:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+      - publish:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+jobs:
+  build:
+    executor: base
+    steps:
+      - checkout:
+          path: ./WhisperLogs2
+      - run:
+          name: Build artifact
+          command: |
+            zip -r WhisperLogs2.zip ./WhisperLogs2
+      - persist_to_workspace:
+          root: .
+          paths:
+            - WhisperLogs2.zip
+  publish:
+    executor: base
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Upload artifact
+          command: bash .circleci/upload.sh
