@@ -45,7 +45,7 @@ echo "CURSE_VERSION_ID: $CURSE_VERSION_ID"
 METADATA_BLOB=$(echo '{
   "changelog": "",
   "changelogType": "text",
-  "releaseType": "alpha"
+  "releaseType": "release"
 }' | jq ".displayName = \"$ADDON_VERSION\" | .gameVersions = [$CURSE_VERSION_ID]")
 
 echo "METADATA_BLOB: $METADATA_BLOB"
