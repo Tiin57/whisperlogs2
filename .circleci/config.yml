@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Build artifact
           command: |
-            rm -rf ./WhisperLogs2/assets
+            rm -rf ./WhisperLogs2/assets ./WhisperLogs2/.git
             zip -r WhisperLogs2.zip ./WhisperLogs2
             mv WhisperLogs2.zip ./WhisperLogs2/WhisperLogs2-$CIRCLE_TAG.zip
       - run:
