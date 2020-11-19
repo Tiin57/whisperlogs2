@@ -31,12 +31,9 @@ function get-toc-field() {
 
 INTERFACE_VERSION=$(get-toc-field Interface)
 echo "INTERFACE_VERSION: $INTERFACE_VERSION"
-
-WOW_VERSION=$(curl -s https://www.townlong-yak.com/framexml/builds |
-  pup '#buildtable tbody tr json{}' |
-  jq -r "map(select(.children[] | .text == \"$INTERFACE_VERSION\")) | .[0].children[0].children[0].text | split(\".\") | .[0:-1] | join(\".\")"
-)
+WOW_VERSION=$(get-toc-field WowVersion)
 echo "WOW_VERSION: $WOW_VERSION"
+
 CURSE_VERSION_ID=$(curl -s "https://wow.curseforge.com/api/game/versions?token=$CURSE_TOKEN" |
   jq -r ".[] | select(.name == \"$WOW_VERSION\") | .id"
 )

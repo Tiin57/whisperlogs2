@@ -1,9 +1,10 @@
-## Interface: 90001
+## Interface: 90002
 ## Title: Whisper Log 2
 ## Notes: Logs your whispers for future reference.
 ## Author: Azarc
-## Version: 1.0.2
+## Version: 1.0.3
 ## SavedVariablesPerCharacter: SAVED_WHISPERS
+## WowVersion: 9.0.2
 
 vendor/json.lua
 
